@@ -1,5 +1,5 @@
 # Advent of Code 2023 - Rust Solutions
-This repository contains my solutions for the Advent of Code 2023 challenges, written in Rust. Each day's solution is organized into a separate crates for clarity and ease of navigation.
+This repository contains my solutions for the Advent of Code 2023 challenges, written in Rust. Each day's solution is organized into separate crates for clarity and ease of navigation.
 
 # Structure
 
@@ -14,14 +14,16 @@ The repository is structured as follows:
 |   |   |-- part2.rs
 |   |   |-- main.rs
 |   |   |-- ...
+|   |-- Cargo.toml
 |-- day02
-|   | -- src
+|   |-- src
 |   |   |-- lib.rs
 |   |   |-- part1.rs
 |   |   |-- part2.rs
 |   |   |-- main.rs
 |   |   |-- ...
-|   |-- ...
+|   |-- Cargo.toml
+|-- ...
 |-- Cargo.toml
 |-- README.md
 ```
