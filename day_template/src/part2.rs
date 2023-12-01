@@ -1,6 +1,6 @@
 #[allow(dead_code)]
 
-fn task(_input: &str) -> Option<String> {
+pub fn task(_input: &str) -> Option<String> {
     todo!("Implement the task here");
 }
 
@@ -10,7 +10,7 @@ mod tests {
 
     #[test]
     fn test_task() {
-        let input = "";
+        let input = include_str!("../part2-example.txt");
         assert!(task(input).is_some());
         assert_eq!(task(input).unwrap(), "");
     }

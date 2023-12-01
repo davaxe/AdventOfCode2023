@@ -2,7 +2,8 @@ use std::collections::HashMap;
 
 #[allow(dead_code)]
 
-fn task(input: &str) -> Option<String> {
+pub fn task(input: &str) -> Option<String> {
+    // Map of string digits to their numeric counterparts
     let str_digits: HashMap<&str, &str> = vec![
         ("one", "1"),
         ("two", "2"),
@@ -35,12 +36,12 @@ fn task(input: &str) -> Option<String> {
             let left_digit = match (first_str_digit_left, first_digit_left) {
                 (Some((pos1, digit_str)), Some((pos2, digit))) => {
                     if pos1 < pos2 {
-                        str_digits.get(digit_str).unwrap()
+                        str_digits[digit_str]
                     } else {
                         digit
                     }
                 }
-                (Some((_, digit_str)), None) => str_digits.get(digit_str).unwrap(),
+                (Some((_, digit_str)), None) => str_digits[digit_str],
                 (None, Some((_, digit))) => digit,
                 _ => {
                     panic!("No digit found")
@@ -61,12 +62,12 @@ fn task(input: &str) -> Option<String> {
             let right_digit = match (first_str_digit_right, first_digit_right) {
                 (Some((pos1, digit_str)), Some((pos2, digit))) => {
                     if pos1 > pos2 {
-                        str_digits.get(digit_str).unwrap()
+                        str_digits[digit_str]
                     } else {
                         digit
                     }
                 }
-                (Some((_, digit_str)), None) => str_digits.get(digit_str).unwrap(),
+                (Some((_, digit_str)), None) => str_digits[digit_str],
                 (None, Some((_, digit))) => digit,
                 _ => {
                     panic!("No digit found")
@@ -87,22 +88,8 @@ mod tests {
 
     #[test]
     fn test_task() {
-        let input = "two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineeightseven2
-zoneight234
-7pqrstsixteen";
+        let input = include_str!("../part2-example.txt");
         assert!(task(input).is_some());
         assert_eq!(task(input).unwrap(), "281");
-    }
-
-    #[test]
-    fn main() {
-        let input = include_str!("../input2.txt");
-        let res = task(input);
-        print!("Result: {:?}", res);
-        assert!(res.is_some());
     }
 }
