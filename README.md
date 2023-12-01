@@ -1,5 +1,5 @@
 # Advent of Code 2023 - Rust Solutions
-This repository contains my solutions for the Advent of Code 2023 challenges, written in Rust. Each day's solution is organized into a separate module for clarity and ease of navigation.
+This repository contains my solutions for the Advent of Code 2023 challenges, written in Rust. Each day's solution is organized into a separate crates for clarity and ease of navigation.
 
 # Structure
 
