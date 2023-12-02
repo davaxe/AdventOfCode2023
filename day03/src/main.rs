@@ -1,4 +1,4 @@
-use day02::{part1, part2};
+use day03::{part1, part2};
 
 fn main() {
     // Output results for both parts
