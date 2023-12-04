@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 use crate::parser;
 
 pub use parser::{CubeSet, Cubes, Game};

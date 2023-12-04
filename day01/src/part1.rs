@@ -1,5 +1,3 @@
-#[allow(dead_code)]
-
 pub fn task(input: &str) -> Option<String> {
     let res: u32 = input
         .lines()

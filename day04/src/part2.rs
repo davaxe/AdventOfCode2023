@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 use crate::parser;
 
 pub fn task(_input: &str) -> Option<String> {

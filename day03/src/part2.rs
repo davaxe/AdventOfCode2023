@@ -1,6 +1,5 @@
 use std::collections::HashSet;
 
-#[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct StrDigit<'a> {
     pub digit: &'a str,
@@ -11,7 +10,7 @@ pub fn task(input: &str) -> Option<String> {
     let mut index = 0;
     let mut result = 0;
     while let Some(star_index) = find_star(&input[index..]) {
-        if let Some((left, right)) = gear(&input, star_index + index, line_len) {
+        if let Some((left, right)) = gear(input, star_index + index, line_len) {
             let a = left.digit.parse::<u32>().ok()?;
             let b = right.digit.parse::<u32>().ok()?;
             result += a * b;
@@ -87,7 +86,7 @@ fn str_digit(input: &str, index: usize) -> Option<StrDigit> {
         (None, Some((r_offset, _))) => Some(StrDigit {
             digit: &input[..index + r_offset],
         }),
-        (None, None) => Some(StrDigit { digit: &input[..] }),
+        (None, None) => Some(StrDigit { digit: input }),
     }
 }
 

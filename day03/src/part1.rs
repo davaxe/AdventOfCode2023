@@ -1,5 +1,3 @@
-#[allow(dead_code)]
-
 pub fn task(input: &str) -> Option<String> {
     // All lines are the same length
     let line_len = input.lines().next()?.len();
@@ -7,12 +5,7 @@ pub fn task(input: &str) -> Option<String> {
 
     let mut index = 0;
     let mut result = 0;
-    loop {
-        let c = match input.chars().nth(index) {
-            Some(c) => c,
-            None => break,
-        };
-
+    while let Some(c) = input.chars().nth(index) {
         if c.is_ascii_digit() {
             let len = digit_len(&input[index..]);
             (index..index + len)

@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-#[allow(dead_code)]
-
 pub fn task(input: &str) -> Option<String> {
     // Map of string digits to their numeric counterparts
     let str_digits: HashMap<&str, &str> = vec![
