@@ -2,19 +2,19 @@ use std::collections::HashSet;
 
 use nom::{
     bytes::complete::tag,
-    character::complete::{digit1, line_ending, space1},
+    character::complete::{self, digit1, line_ending, space1},
     multi::separated_list1,
     sequence::{delimited, separated_pair, tuple},
     IResult,
 };
 
 #[derive(Debug)]
-pub struct Card<'a> {
-    winning_numbers: HashSet<&'a str>,
-    numbers: HashSet<&'a str>,
+pub struct Card {
+    winning_numbers: HashSet<u32>,
+    numbers: HashSet<u32>,
 }
 
-impl Card<'_> {
+impl Card {
     pub fn winning_score(&self) -> u32 {
         let overlapping = self.winning_numbers.intersection(&self.numbers).count() as u32;
         if overlapping == 0 {
@@ -29,8 +29,8 @@ impl Card<'_> {
     }
 }
 
-fn numbers(input: &str) -> IResult<&str, HashSet<&str>> {
-    let (input, numbers) = separated_list1(space1, digit1)(input)?;
+fn numbers(input: &str) -> IResult<&str, HashSet<u32>> {
+    let (input, numbers) = separated_list1(space1, complete::u32)(input)?;
     Ok((input, numbers.into_iter().collect::<HashSet<_>>()))
 }
 
