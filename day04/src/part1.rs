@@ -1,7 +1,15 @@
 #[allow(dead_code)]
+use crate::parser;
 
 pub fn task(_input: &str) -> Option<String> {
-    todo!("Implement the task here");
+    let (_, cards) = parser::cards(_input).ok()?;
+    Some(
+        cards
+            .iter()
+            .map(|c| c.winning_score())
+            .sum::<u32>()
+            .to_string(),
+    )
 }
 
 #[cfg(test)]
