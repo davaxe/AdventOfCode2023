@@ -21,7 +21,7 @@ pub fn task(input: &str) -> Option<String> {
     let d_max = distance as f32;
     let t = time as f32;
     // Offset a bit to avoid edge cases, i.e. equality. If no offset is used, the
-    // there might occur overcoming of the number of points.
+    // there might occur extra valid values.
     let t_min = 0.5f32 * (t - (t * t - 4f32 * d_max).sqrt()) + 0.01;
     let t_max = 0.5f32 * (t + (t * t - 4f32 * d_max).sqrt()) - 0.01;
     Some((t_max.floor() as u32 - t_min.ceil() as u32 + 1).to_string())
@@ -34,7 +34,8 @@ mod tests {
     #[test]
     fn test_task() {
         let input = include_str!("../part2-example.txt");
-        assert!(task(input).is_some());
-        assert_eq!(task(input).unwrap(), "71503");
+        let result = task(input);
+        assert!(result.is_some());
+        assert_eq!(result.unwrap(), "71503");
     }
 }

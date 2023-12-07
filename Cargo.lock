@@ -27,6 +27,20 @@ dependencies = [
 [[package]]
 name = "day05"
 version = "0.1.0"
+dependencies = [
+ "nom",
+]
+
+[[package]]
+name = "day06"
+version = "0.1.0"
+dependencies = [
+ "nom",
+]
+
+[[package]]
+name = "day07"
+version = "0.1.0"
 
 [[package]]
 name = "memchr"

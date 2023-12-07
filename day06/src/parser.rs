@@ -3,7 +3,7 @@ use nom::{
     bytes::complete::tag,
     character::complete::{self, line_ending, space1},
     multi::separated_list1,
-    sequence::{preceded, terminated, tuple},
+    sequence::terminated,
     IResult,
 };
 

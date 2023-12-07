@@ -14,7 +14,7 @@ pub fn task(input: &str) -> Option<String> {
                 let d_max = *d_max as f32;
                 let t = *t as f32;
                 // Offset a bit to avoid edge cases, i.e. equality. If no offset
-                // is used, the there might occur overcoming of the number of points.
+                // is used there might occur extra valid values.
                 let t_min = 0.5f32 * (t - (t * t - 4f32 * d_max).sqrt()) + 0.01;
                 let t_max = 0.5f32 * (t + (t * t - 4f32 * d_max).sqrt()) - 0.01;
                 t_max.floor() as u32 - t_min.ceil() as u32 + 1
