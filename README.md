@@ -28,8 +28,8 @@ The repository is structured as follows:
 |-- README.md
 ```
 
-- Each day's solution resides in its own module (e.g., `day1`, `day2`).
-- Every day consist of two seperate modules for the two parts.
+- Each day's solution resides in its own crate (e.g., `day01`, `day02`).
+- Every day consist of two separate modules for the two parts.
 - Additionally every day have four text files with all different inputs from.
 - The `main.rs` file contains rust code for displaying result of part 1 and part 2 respectively.
 
