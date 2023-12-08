@@ -1,4 +1,4 @@
-use std::{collections::HashMap, ops::Range, result};
+use std::ops::Range;
 
 use nom::{
     branch::alt,
@@ -28,36 +28,6 @@ impl ConversionMap<'_> {
             }
         }
         value
-    }
-
-    pub fn convert_range(&self, range: &Range<u64>) -> Vec<Range<u64>> {
-        let mut remaining = vec![range.clone()];
-        let mut results = vec![];
-        while let Some(range) = remaining.pop() {
-            for (map_range, r) in &self.maps {
-                // Check if the range is completely outside the map range
-                if range.start > map_range.end || range.end < map_range.start {
-                    continue;
-                }
-
-                // Overlap
-                let start = range.start.max(map_range.start);
-                let end = range.end.min(map_range.end);
-
-                if start > range.start {
-                    remaining.push(range.start..start);
-                }
-
-                if end < range.end {
-                    remaining.push(end..range.end);
-                }
-
-                let new_start = (start as i128 + r) as u64;
-                let new_end = (end as i128 + r) as u64;
-                results.push(new_start..new_end);
-            }
-        }
-        results
     }
 }
 

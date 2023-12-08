@@ -7,7 +7,6 @@ fn main() {
     );
     println!(
         "Part 2:\n  {}",
-        part2::task(include_str!("../part2-example.txt"))
-            .unwrap_or("No solution found".to_string())
+        part2::task(include_str!("../part2-input.txt")).unwrap_or("No solution found".to_string())
     );
 }

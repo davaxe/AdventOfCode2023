@@ -100,10 +100,9 @@ fn get_hand_type(hand: &str) -> HandType {
     let mut card_count = HashMap::new();
     let mut count = [0; 5];
 
-    for card in hand.chars() {
-        let card_count = card_count.entry(card).or_insert(0);
-        *card_count += 1;
-    }
+    hand.chars().for_each(|card| {
+        *card_count.entry(card).or_insert(0) += 1;
+    });
 
     // Covert to count of counts, value of index i is the number of cards that
     // appear i+1 times.

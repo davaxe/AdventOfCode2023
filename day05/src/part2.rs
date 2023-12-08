@@ -1,6 +1,8 @@
-use std::{ops::Range, vec};
+use std::ops::Range;
 
-use crate::parser::{self, ConversionMap, Seed};
+use rayon::prelude::*;
+
+use crate::parser::{self, Seed};
 
 pub fn task(input: &str) -> Option<String> {
     let (_, (seeds, maps)) = parser::almanac(input).ok()?;
@@ -13,7 +15,15 @@ pub fn task(input: &str) -> Option<String> {
         })
         .collect();
 
-    None
+    Some(
+        seeds_ranges
+            .into_par_iter()
+            .flat_map(|range| range)
+            .map(|seed| maps.iter().fold(seed, |acc, map| map.convert(acc)))
+            .min()
+            .unwrap()
+            .to_string(),
+    )
 }
 
 #[cfg(test)]

@@ -108,9 +108,7 @@ fn get_hand_type(hand: &str) -> HandType {
             jokers += 1;
             continue;
         }
-
-        let card_count = card_count.entry(card).or_insert(0);
-        *card_count += 1;
+        *card_count.entry(card).or_insert(0) += 1;
     }
 
     // Find card that appears the most
