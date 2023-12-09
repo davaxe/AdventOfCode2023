@@ -2,8 +2,8 @@ pub fn task(input: &str) -> Option<String> {
     let values: Vec<Vec<i32>> = input
         .lines()
         .map(|line| {
-            line.split(' ')
-                .filter_map(|num| num.parse::<i32>().ok())
+            line.split_whitespace()
+                .filter_map(|num| num.parse().ok())
                 .collect() // Might not need to collect here
         })
         .collect();
@@ -40,7 +40,7 @@ fn next_prediction(row: &[i32]) -> i32 {
                 .expect("Expected at least one value"),
         );
     }
-    last + differences.iter().sum::<i32>()
+    last + differences.into_iter().sum::<i32>()
 }
 
 #[cfg(test)]

@@ -2,9 +2,9 @@ pub fn task(input: &str) -> Option<String> {
     let values: Vec<Vec<i32>> = input
         .lines()
         .map(|line| {
-            line.split(' ')
+            line.split_whitespace()
                 .rev() // Only change from part 1 is to reverse the input
-                .filter_map(|num| num.parse::<i32>().ok())
+                .filter_map(|num| num.parse().ok())
                 .collect()
         })
         .collect();
@@ -41,7 +41,7 @@ fn next_prediction(row: &[i32]) -> i32 {
                 .expect("Expected at least one value"),
         );
     }
-    last + differences.iter().sum::<i32>()
+    last + differences.into_iter().sum::<i32>()
 }
 
 #[cfg(test)]
