@@ -32,7 +32,7 @@ mod tests {
 
     #[test]
     fn test_task() {
-        let input = include_str!("../part2-example.txt");
+        let input = include_str!("../example.txt");
         let result = task(input);
         assert!(result.is_some());
         assert_eq!(result.unwrap(), "46");
