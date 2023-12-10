@@ -4,7 +4,7 @@ pub fn task(input: &str) -> Option<String> {
         .map(|line| {
             line.split_whitespace()
                 .filter_map(|num| num.parse().ok())
-                .collect() // Might not need to collect here
+                .collect()
         })
         .collect();
 
