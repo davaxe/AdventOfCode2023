@@ -8,6 +8,7 @@ fn main() {
     );
     println!(
         "Part 2:\n  {}",
-        part2::task(include_str!("../input.txt")).unwrap_or("No solution found".to_string())
+        part2::task(include_str!("../input.txt"), 1000000)
+            .unwrap_or("No solution found".to_string())
     );
 }
