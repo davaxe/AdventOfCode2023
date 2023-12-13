@@ -1,5 +1,5 @@
-// Change day01 to the correct day
 use day08::{part1, part2};
+
 fn main() {
     // Output results for both parts
     println!(

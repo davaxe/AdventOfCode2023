@@ -40,7 +40,7 @@ Navigate to the root directory and execute the following command:
 ```bash
 cargo run --bin dayXX
 ```
-Replace `XX` with the date to run.
+Replace `XX` with the date to run. Additionally, it is required to add the puzzle input (from AOC) in a text file with name `input.txt` in the root of the crate `dayXX`.
 
 # Disclaimer
 

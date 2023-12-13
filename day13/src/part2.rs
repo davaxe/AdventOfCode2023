@@ -1,7 +1,7 @@
 use crate::parser::{self, Reflection};
 
-pub fn task(_input: &str) -> Option<String> {
-    let (_, patterns) = parser::patterns(_input).ok()?;
+pub fn task(input: &str) -> Option<String> {
+    let (_, patterns) = parser::patterns(input).ok()?;
     Some(
         patterns
             .iter()
