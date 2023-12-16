@@ -37,16 +37,13 @@ pub fn task(input: &str) -> Option<String> {
 
     // Set containing beams that have already happened to prevent infinite loops
     let mut already_happened: HashSet<(Direction, Tile, (usize, usize))> = HashSet::new();
-
     // Set containing all visited positions
     let mut visited: HashSet<(usize, usize)> = HashSet::new();
     // Vector containing active beams
     let mut beams = vec![(0usize, 0usize, Direction::Right)];
-
     // Get width and height of the contraption
     let width = contraption[0].len() - 1;
     let height = contraption.len() - 1;
-
     let mut first = true;
 
     while !beams.is_empty() {
@@ -65,17 +62,16 @@ pub fn task(input: &str) -> Option<String> {
                 Direction::Left if *x > 0 => (*x - 1, *y),
                 Direction::Right if *x < width => (*x + 1, *y),
                 _ => {
+                    // Remove beam if next position is out of bounds
                     remove.push(idx);
                     continue;
                 }
             };
 
             visited.insert((nx, ny));
-
-            let prev_tile = contraption[*x][*y];
-
             // Handle beam depending on the next tile
-            match contraption[ny][nx] {
+            let tile = contraption[ny][nx];
+            match tile {
                 Tile::Empty => {
                     // Move the beam
                     *x = nx;
@@ -85,7 +81,6 @@ pub fn task(input: &str) -> Option<String> {
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Right,
@@ -98,7 +93,6 @@ pub fn task(input: &str) -> Option<String> {
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Left,
@@ -108,18 +102,17 @@ pub fn task(input: &str) -> Option<String> {
                     };
                 }
                 Tile::HorizontalSplitter => {
-                    if already_happened.contains(&(*dir, prev_tile, (*x, *y))) {
+                    if already_happened.contains(&(*dir, tile, (*x, *y))) {
                         remove.push(idx);
                         continue;
                     }
-                    already_happened.insert((*dir, prev_tile, (*x, *y)));
+                    already_happened.insert((*dir, tile, (*x, *y)));
 
                     if *dir == Direction::Right || *dir == Direction::Left {
                         *x = nx;
                         *y = ny;
                         continue;
                     }
-
                     // Create new beam
                     new_beams.push((
                         nx,
@@ -134,7 +127,6 @@ pub fn task(input: &str) -> Option<String> {
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Left,
@@ -143,18 +135,17 @@ pub fn task(input: &str) -> Option<String> {
                     };
                 }
                 Tile::VerticalSplitter => {
-                    if already_happened.contains(&(*dir, prev_tile, (*x, *y))) {
+                    if already_happened.contains(&(*dir, tile, (*x, *y))) {
                         remove.push(idx);
                         continue;
                     }
-                    already_happened.insert((*dir, prev_tile, (*x, *y)));
+                    already_happened.insert((*dir, tile, (*x, *y)));
 
                     if *dir == Direction::Up || *dir == Direction::Down {
                         *x = nx;
                         *y = ny;
                         continue;
                     }
-
                     // Create new beam
                     new_beams.push((
                         nx,
@@ -169,7 +160,6 @@ pub fn task(input: &str) -> Option<String> {
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Left => Direction::Up,

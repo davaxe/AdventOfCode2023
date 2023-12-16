@@ -45,6 +45,7 @@ pub fn task(input: &str) -> Option<String> {
         .map(|y| (0, y, Direction::Right))
         .chain((0..height).map(|y| (width - 1, y, Direction::Left)));
 
+    // Result is the start position that results in the most energized tiles
     possible_horizontal_starts
         .chain(possible_vertical_starts)
         .map(|start| energized_tiles(start, &contraption))
@@ -55,16 +56,13 @@ pub fn task(input: &str) -> Option<String> {
 fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]) -> usize {
     // Set containing beams that have already happened to prevent infinite loops
     let mut already_happened: HashSet<(Direction, Tile, (usize, usize))> = HashSet::new();
-
     // Set containing all visited positions
     let mut visited: HashSet<(usize, usize)> = HashSet::new();
     // Vector containing active beams
     let mut beams = vec![start];
-
     // Get width and height of the contraption
     let width = contraption[0].len() - 1;
     let height = contraption.len() - 1;
-
     let mut first = true;
 
     while !beams.is_empty() {
@@ -83,6 +81,7 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                 Direction::Left if *x > 0 => (*x - 1, *y),
                 Direction::Right if *x < width => (*x + 1, *y),
                 _ => {
+                    // Remove beam if next position is out of bounds
                     remove.push(idx);
                     continue;
                 }
@@ -90,10 +89,9 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
 
             visited.insert((nx, ny));
 
-            let prev_tile = contraption[*x][*y];
-
             // Handle beam depending on the next tile
-            match contraption[ny][nx] {
+            let tile = contraption[ny][nx];
+            match tile {
                 Tile::Empty => {
                     // Move the beam
                     *x = nx;
@@ -103,7 +101,6 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Right,
@@ -116,7 +113,6 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Left,
@@ -126,18 +122,17 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     };
                 }
                 Tile::HorizontalSplitter => {
-                    if already_happened.contains(&(*dir, prev_tile, (*x, *y))) {
+                    if already_happened.contains(&(*dir, tile, (*x, *y))) {
                         remove.push(idx);
                         continue;
                     }
-                    already_happened.insert((*dir, prev_tile, (*x, *y)));
+                    already_happened.insert((*dir, tile, (*x, *y)));
 
                     if *dir == Direction::Right || *dir == Direction::Left {
                         *x = nx;
                         *y = ny;
                         continue;
                     }
-
                     // Create new beam
                     new_beams.push((
                         nx,
@@ -152,7 +147,6 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Up => Direction::Left,
@@ -161,18 +155,17 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     };
                 }
                 Tile::VerticalSplitter => {
-                    if already_happened.contains(&(*dir, prev_tile, (*x, *y))) {
+                    if already_happened.contains(&(*dir, tile, (*x, *y))) {
                         remove.push(idx);
                         continue;
                     }
-                    already_happened.insert((*dir, prev_tile, (*x, *y)));
+                    already_happened.insert((*dir, tile, (*x, *y)));
 
                     if *dir == Direction::Up || *dir == Direction::Down {
                         *x = nx;
                         *y = ny;
                         continue;
                     }
-
                     // Create new beam
                     new_beams.push((
                         nx,
@@ -187,7 +180,6 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                     // Move the beam
                     *x = nx;
                     *y = ny;
-
                     // Change direction
                     *dir = match dir {
                         Direction::Left => Direction::Up,
@@ -197,7 +189,6 @@ fn energized_tiles(start: (usize, usize, Direction), contraption: &[Box<[Tile]>]
                 }
             }
         }
-
         // Remove beams that are out of bounds
         let len = beams.len();
         for (i, idx) in remove.iter().enumerate() {
