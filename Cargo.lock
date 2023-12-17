@@ -149,6 +149,9 @@ version = "0.1.0"
 [[package]]
 name = "day17"
 version = "0.1.0"
+dependencies = [
+ "itertools",
+]
 
 [[package]]
 name = "either"
