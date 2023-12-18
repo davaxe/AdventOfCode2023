@@ -3,7 +3,7 @@ use std::{
     collections::{BinaryHeap, HashMap},
 };
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, Copy, PartialOrd, Ord)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, PartialOrd, Ord)]
 enum Direction {
     Up,
     Down,
@@ -49,7 +49,7 @@ pub fn task(input: &str) -> Option<String> {
             continue;
         }
 
-        for n_node in get_neighbors(&node, (width as i32, height as i32)) {
+        for n_node in get_neighbors(node, (width as i32, height as i32)) {
             let next_pos = n_node.pos;
             let next_cost = cost + map[next_pos.1 as usize][next_pos.0 as usize];
 
@@ -62,7 +62,7 @@ pub fn task(input: &str) -> Option<String> {
     None
 }
 
-fn get_neighbors(node: &Node, (width, height): (i32, i32)) -> impl Iterator<Item = Node> + '_ {
+fn get_neighbors(node: Node, (width, height): (i32, i32)) -> impl Iterator<Item = Node> {
     let (x, y) = node.pos;
     let current_dir = node.dir;
     let c_remaining_dir = node.remaining_dir;
@@ -73,6 +73,7 @@ fn get_neighbors(node: &Node, (width, height): (i32, i32)) -> impl Iterator<Item
         ((x, y + 1), Direction::Down),
     ]
     .into_iter()
+    // Bounds check
     .filter(move |&((x, y), _)| x >= 0 && y >= 0 && x < width && y < height)
     // Do not allow backwards movement
     .filter(move |(_, n_dir)| match n_dir {
@@ -81,6 +82,8 @@ fn get_neighbors(node: &Node, (width, height): (i32, i32)) -> impl Iterator<Item
         Direction::Up => current_dir != Direction::Down,
         Direction::Down => current_dir != Direction::Up,
     })
+    // Handle restrictions on movement - can only travel same direction 3 times in
+    // a row
     .filter_map(move |(pos, dir)| {
         let remaining_dir = if current_dir == dir {
             c_remaining_dir - 1
