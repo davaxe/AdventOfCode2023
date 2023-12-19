@@ -12,6 +12,6 @@ mod tests {
         let input = include_str!("../example.txt");
         let result = task(input);
         assert!(result.is_some());
-        assert_eq!(result.unwrap(), "");
+        assert_eq!(result.unwrap(), "167409079868000");
     }
 }
