@@ -80,6 +80,7 @@ pub fn task(input: &str) -> Option<String> {
         sides.reverse();
     }
 
+    // Shoelace Algorithm
     let mut a = sides
         .windows(2)
         .map(|win| {
