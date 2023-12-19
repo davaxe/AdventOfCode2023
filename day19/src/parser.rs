@@ -9,23 +9,12 @@ use nom::{
     IResult,
 };
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum PartCategory {
     Cool,
     Musical,
     Aerodynamic,
     Shiny,
-}
-
-impl PartCategory {
-    pub fn value(&self) -> usize {
-        match self {
-            PartCategory::Cool => 0,
-            PartCategory::Musical => 1,
-            PartCategory::Aerodynamic => 2,
-            PartCategory::Shiny => 3,
-        }
-    }
 }
 
 #[derive(Debug)]
@@ -36,16 +25,17 @@ pub struct Part {
     pub s: u32,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 pub enum ComparisonType {
     GreaterThan,
     LessThan,
+    NoComparison,
 }
 
 #[derive(Debug)]
 pub struct Comparison<'a> {
     /// The category of part to check.
-    pub part_category: PartCategory,
+    pub part_category: Option<PartCategory>,
     /// The comparison to perform.
     pub kind: ComparisonType,
     /// The value to compare against.
@@ -58,10 +48,12 @@ impl<'a> Comparison<'a> {
     fn evaluate(&self, part: &Part) -> Option<&'a str> {
         // Get correct value from part.
         let part_value = match self.part_category {
-            PartCategory::Cool => part.x,
-            PartCategory::Musical => part.m,
-            PartCategory::Aerodynamic => part.a,
-            PartCategory::Shiny => part.s,
+            Some(_) if self.kind == ComparisonType::NoComparison => return Some(self.result),
+            Some(PartCategory::Cool) => part.x,
+            Some(PartCategory::Musical) => part.m,
+            Some(PartCategory::Aerodynamic) => part.a,
+            Some(PartCategory::Shiny) => part.s,
+            _ => return None,
         };
 
         match self.kind {
@@ -75,7 +67,6 @@ impl<'a> Comparison<'a> {
 #[derive(Debug)]
 pub struct Rule<'a> {
     pub comparisons: Vec<Comparison<'a>>,
-    final_result: &'a str,
 }
 
 impl<'a> Rule<'a> {
@@ -88,7 +79,7 @@ impl<'a> Rule<'a> {
         }
 
         // If no comparisons are valid, return the final result.
-        self.final_result
+        self.comparisons.last().unwrap().result
     }
 }
 
@@ -139,7 +130,7 @@ fn comparison(input: &str) -> IResult<&str, Comparison> {
     ))(input)
     .map(|(input, (part_category, comparison, value, result))| {
         let comparison = Comparison {
-            part_category,
+            part_category: Some(part_category),
             kind: comparison,
             value,
             result,
@@ -150,19 +141,18 @@ fn comparison(input: &str) -> IResult<&str, Comparison> {
 
 fn rule(input: &str) -> IResult<&str, (&str, Rule)> {
     let (input, name) = take_till(|c| c == '{')(input)?;
-    let (input, comparisons) = preceded(tag("{"), separated_list1(tag(","), comparison))(input)?;
+    let (input, mut comparisons) =
+        preceded(tag("{"), separated_list1(tag(","), comparison))(input)?;
     let (input, final_result) = delimited(tag(","), take_till(|c| c == '}'), tag("}"))(input)?;
 
-    Ok((
-        input,
-        (
-            name,
-            Rule {
-                comparisons,
-                final_result,
-            },
-        ),
-    ))
+    comparisons.push(Comparison {
+        part_category: None,
+        kind: ComparisonType::NoComparison,
+        value: 0,
+        result: final_result,
+    });
+
+    Ok((input, (name, Rule { comparisons })))
 }
 
 pub fn rules(input: &str) -> IResult<&str, HashMap<&str, Rule>> {
