@@ -1,7 +1,5 @@
-use std::{
-    cmp::Reverse,
-    collections::{BinaryHeap, HashMap},
-};
+use std::cmp::Reverse;
+use std::collections::{BinaryHeap, HashMap};
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Copy, PartialOrd, Ord)]
 enum Direction {

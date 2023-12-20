@@ -1,10 +1,8 @@
-use nom::{
-    bytes::complete::tag,
-    character::complete::{self, alpha0, line_ending, space0},
-    multi::separated_list1,
-    sequence::{delimited, preceded},
-    IResult,
-};
+use nom::bytes::complete::tag;
+use nom::character::complete::{self, alpha0, line_ending, space0};
+use nom::multi::separated_list1;
+use nom::sequence::{delimited, preceded};
+use nom::IResult;
 
 #[derive(Debug)]
 pub enum Cubes {
@@ -69,8 +67,8 @@ fn game(input: &str) -> IResult<&str, Game> {
     Ok((input, Game { id: game, sets }))
 }
 
-/// Parse a list of games, where each line is a game of the form given in the problem
-/// description
+/// Parse a list of games, where each line is a game of the form given in the
+/// problem description
 pub fn games(input: &str) -> IResult<&str, Vec<Game>> {
     separated_list1(line_ending, game)(input)
 }

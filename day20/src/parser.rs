@@ -1,13 +1,11 @@
 use std::collections::HashMap;
 
-use nom::{
-    branch::alt,
-    bytes::{complete::tag, complete::take_till},
-    character::complete::line_ending,
-    multi::separated_list1,
-    sequence::{preceded, tuple},
-    IResult,
-};
+use nom::branch::alt;
+use nom::bytes::complete::{tag, take_till};
+use nom::character::complete::line_ending;
+use nom::multi::separated_list1;
+use nom::sequence::{preceded, tuple};
+use nom::IResult;
 
 #[derive(Debug)]
 pub enum State {
@@ -34,10 +32,6 @@ pub struct Module<'a> {
     pub connections: Vec<&'a str>,
     pub identifier: &'a str,
 }
-
-/* -------------------------------------------------------------------------- */
-/*                              Parsing functions                             */
-/* -------------------------------------------------------------------------- */
 
 fn module_type(input: &str) -> IResult<&str, ModuleType> {
     alt((tag("%"), tag("&"), tag("")))(input).map(|(input, t)| match t {

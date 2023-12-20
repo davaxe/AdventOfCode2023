@@ -1,6 +1,6 @@
-use crate::parser;
-
 pub use parser::{CubeSet, Cubes, Game};
+
+use crate::parser;
 
 pub fn task(input: &str) -> Option<String> {
     let (_, games) = parser::games(input).ok()?;

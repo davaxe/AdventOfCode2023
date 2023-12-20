@@ -85,8 +85,8 @@ impl Ord for Hand<'_> {
             return ordering;
         }
 
-        // Compare each card in the hand, and return the ordering (based on value of the card)
-        // of the first card that is different
+        // Compare each card in the hand, and return the ordering (based on value of the
+        // card) of the first card that is different
         for (a, b) in self.hand.chars().zip(other.hand.chars()) {
             if a != b {
                 return card_values[&a].cmp(&card_values[&b]);

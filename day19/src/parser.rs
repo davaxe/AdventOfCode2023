@@ -1,13 +1,11 @@
 use std::collections::HashMap;
 
-use nom::{
-    branch::alt,
-    bytes::complete::{tag, take_till},
-    character::complete::{self, line_ending},
-    multi::{many0, separated_list1},
-    sequence::{delimited, preceded, tuple},
-    IResult,
-};
+use nom::branch::alt;
+use nom::bytes::complete::{tag, take_till};
+use nom::character::complete::{self, line_ending};
+use nom::multi::{many0, separated_list1};
+use nom::sequence::{delimited, preceded, tuple};
+use nom::IResult;
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum PartCategory {
@@ -82,10 +80,6 @@ impl<'a> Rule<'a> {
         self.comparisons.last().unwrap().result
     }
 }
-
-/* -------------------------------------------------------------------------- */
-/*                           Parsing functions                                */
-/* -------------------------------------------------------------------------- */
 
 fn part_category(input: &str) -> IResult<&str, PartCategory> {
     alt((

@@ -3,7 +3,8 @@ use std::collections::HashMap;
 use itertools::Itertools;
 
 pub fn task(input: &str) -> Option<String> {
-    // Hashmap mapping box number to a vector of tuples containing the label and focal length
+    // Hashmap mapping box number to a vector of tuples containing the label and
+    // focal length
     let mut boxes: HashMap<u32, Vec<(&str, u32)>> = HashMap::new();
 
     input.split(',').for_each(|s| {

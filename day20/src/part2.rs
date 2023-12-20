@@ -1,8 +1,9 @@
-//! Module for solving part 2. Important to note is that this code will not generally
-//! work for other inputs than the one given in the problem description. This is because
-//! the code relies on specific properties of the input, e.g. the fact that `cn` is the
-//! only module that can send high pulses to `rx`, and that `cn` is (backwards) connected
-//! to `ch`, `gh`, `sv`, and `th`.
+//! Module for solving part 2. Important to note is that this code will not
+//! generally work for other inputs than the one given in the problem
+//! description. This is because the code relies on specific properties of the
+//! input, e.g. the fact that `cn` is the only module that can send high pulses
+//! to `rx`, and that `cn` is (backwards) connected to `ch`, `gh`, `sv`, and
+//! `th`.
 
 use std::collections::VecDeque;
 

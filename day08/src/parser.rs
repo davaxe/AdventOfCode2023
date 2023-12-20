@@ -1,12 +1,10 @@
 use std::collections::HashMap;
 
-use nom::{
-    bytes::complete::{tag, take_while1},
-    character::complete::line_ending,
-    multi::{many1, separated_list1},
-    sequence::{delimited, separated_pair, terminated},
-    IResult,
-};
+use nom::bytes::complete::{tag, take_while1};
+use nom::character::complete::line_ending;
+use nom::multi::{many1, separated_list1};
+use nom::sequence::{delimited, separated_pair, terminated};
+use nom::IResult;
 
 /// A str slice of direction, e.g. "RLRRL".
 #[derive(Debug)]

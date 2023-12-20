@@ -1,12 +1,10 @@
 use std::collections::HashSet;
 
-use nom::{
-    bytes::complete::tag,
-    character::complete::{self, digit1, line_ending, space1},
-    multi::separated_list1,
-    sequence::{delimited, separated_pair, tuple},
-    IResult,
-};
+use nom::bytes::complete::tag;
+use nom::character::complete::{self, digit1, line_ending, space1};
+use nom::multi::separated_list1;
+use nom::sequence::{delimited, separated_pair, tuple};
+use nom::IResult;
 
 #[derive(Debug)]
 pub struct Card {

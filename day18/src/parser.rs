@@ -1,10 +1,8 @@
-use nom::{
-    bytes::complete::{tag, take_till},
-    character::complete::{anychar, digit0, line_ending, space1},
-    multi::separated_list1,
-    sequence::{delimited, preceded, separated_pair},
-    IResult,
-};
+use nom::bytes::complete::{tag, take_till};
+use nom::character::complete::{anychar, digit0, line_ending, space1};
+use nom::multi::separated_list1;
+use nom::sequence::{delimited, preceded, separated_pair};
+use nom::IResult;
 
 #[derive(Debug, PartialEq, Eq, Clone, Hash, Copy)]
 pub enum Direction {

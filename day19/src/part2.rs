@@ -1,4 +1,5 @@
-use std::{collections::HashMap, ops::Range};
+use std::collections::HashMap;
+use std::ops::Range;
 
 use crate::parser::{rules, ComparisonType, PartCategory, Rule};
 
@@ -29,7 +30,8 @@ fn valid_combinations(
 
     for comp in &rule.comparisons {
         let next = comp.result;
-        // Get relevant range, if it unwraps we are guaranteed to have NoComparison as kind
+        // Get relevant range, if it unwraps we are guaranteed to have NoComparison as
+        // kind
         let range_index = part_category_to_range_index(
             comp.part_category.as_ref().unwrap_or(&PartCategory::Cool),
         );

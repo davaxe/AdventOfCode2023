@@ -1,11 +1,9 @@
-use nom::{
-    branch::alt,
-    bytes::complete::tag,
-    character::complete::{self, line_ending, space1},
-    multi::separated_list1,
-    sequence::terminated,
-    IResult,
-};
+use nom::branch::alt;
+use nom::bytes::complete::tag;
+use nom::character::complete::{self, line_ending, space1};
+use nom::multi::separated_list1;
+use nom::sequence::terminated;
+use nom::IResult;
 
 pub fn times(input: &str) -> IResult<&str, Vec<u32>> {
     let (input, _) = terminated(tag("Time:"), space1)(input)?;

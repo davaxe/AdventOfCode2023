@@ -1,6 +1,7 @@
-use nom::{
-    bytes::complete::take_till, character::complete::line_ending, multi::separated_list1, IResult,
-};
+use nom::bytes::complete::take_till;
+use nom::character::complete::line_ending;
+use nom::multi::separated_list1;
+use nom::IResult;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Tile {
@@ -33,7 +34,8 @@ pub struct Board {
 }
 
 impl Board {
-    /// Move all round rocks in the given direction until no more movement is possible
+    /// Move all round rocks in the given direction until no more movement is
+    /// possible
     pub fn move_round_rocks(&mut self, direction: Direction) -> u32 {
         let mut steps = 0;
         while self.move_round_rocks_step(direction) > 0 {
@@ -64,7 +66,8 @@ impl Board {
         changes.len() as _
     }
 
-    /// Calculate the total load of the board in its current state, as defined by the problem
+    /// Calculate the total load of the board in its current state, as defined
+    /// by the problem
     pub fn total_load(&self) -> u32 {
         let height = self.tiles.len();
         self.round_rocks
@@ -72,8 +75,8 @@ impl Board {
             .fold(0, |acc, (_x, y)| acc + (height - y) as u32)
     }
 
-    /// Calculate the possible movement of a rock at position (x, y) in the given
-    ///  direction.
+    /// Calculate the possible movement of a rock at position (x, y) in the
+    /// given  direction.
     fn possible_movement(
         &self,
         x: usize,

@@ -50,7 +50,7 @@ mod tests {
     use super::*;
 
     #[test]
-    #[ignore]
+    #[ignore = "Somehow off by one (correct for input)"]
     fn test_task() {
         let input = include_str!("../example.txt");
         let result = task(input);

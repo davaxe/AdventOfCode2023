@@ -1,13 +1,11 @@
 use std::ops::Range;
 
-use nom::{
-    branch::alt,
-    bytes::complete::tag,
-    character::complete::{self, alpha1, line_ending, space1},
-    multi::separated_list1,
-    sequence::{preceded, separated_pair, terminated, tuple},
-    IResult,
-};
+use nom::branch::alt;
+use nom::bytes::complete::tag;
+use nom::character::complete::{self, alpha1, line_ending, space1};
+use nom::multi::separated_list1;
+use nom::sequence::{preceded, separated_pair, terminated, tuple};
+use nom::IResult;
 
 #[derive(Debug)]
 pub struct Seed(pub u64);

@@ -1,8 +1,8 @@
 use itertools::Itertools;
-
-use nom::{
-    bytes::complete::take_till, character::complete::line_ending, multi::separated_list1, IResult,
-};
+use nom::bytes::complete::take_till;
+use nom::character::complete::line_ending;
+use nom::multi::separated_list1;
+use nom::IResult;
 
 /// A reflection is a horizontal or vertical reflection in a pattern. It is
 /// defined by the indices of the two rows or columns that are each other's
