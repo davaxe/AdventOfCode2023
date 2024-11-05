@@ -2,7 +2,7 @@ name: Clear File Contents
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   clear-files:
