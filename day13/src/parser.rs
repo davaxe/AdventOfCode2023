@@ -7,10 +7,10 @@ use nom::IResult;
 /// A reflection is a horizontal or vertical reflection in a pattern. It is
 /// defined by the indices of the two rows or columns that are each other's
 /// reflection.
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 pub enum Reflection {
-    Horizontal(usize, usize),
-    Vertical(usize, usize),
+    Horizontal((), usize),
+    Vertical((), usize),
 }
 
 /// A pattern is a rectangular grid of characters.
@@ -38,10 +38,10 @@ impl Pattern {
     /// Find a horizontal or vertical reflection in the pattern.
     pub fn find_reflection(&self) -> Option<Reflection> {
         if let Some(i) = Self::find_reflection_in(&self.rows) {
-            return Some(Reflection::Horizontal(i, i + 1));
+            return Some(Reflection::Horizontal((), i + 1));
         }
         if let Some(i) = Self::find_reflection_in(&self.columns) {
-            return Some(Reflection::Vertical(i, i + 1));
+            return Some(Reflection::Vertical((), i + 1));
         }
         None
     }
@@ -51,10 +51,10 @@ impl Pattern {
     /// one change, i.e. won't find exact reflections.
     pub fn find_almost_reflection(&self, max_changes: usize) -> Option<Reflection> {
         if let Some(i) = Self::find_potential_reflection_in(&self.rows, max_changes) {
-            return Some(Reflection::Horizontal(i, i + 1));
+            return Some(Reflection::Horizontal((), i + 1));
         }
         if let Some(i) = Self::find_potential_reflection_in(&self.columns, max_changes) {
-            return Some(Reflection::Vertical(i, i + 1));
+            return Some(Reflection::Vertical((), i + 1));
         }
         None
     }
@@ -91,7 +91,6 @@ impl Pattern {
     /// return true for exact reflections.
     fn find_potential_reflection_in(values: &[String], max_changes: usize) -> Option<usize> {
         let mut indices = vec![];
-
         let mut current_index = 0;
         while let Some((index, differences)) = values[current_index..]
             .windows(2)
